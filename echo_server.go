@@ -25,13 +25,24 @@ func (rl requestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 	}
 
-	var prettyJSON bytes.Buffer
-	if err = json.Indent(&prettyJSON, bodyBytes, "", "\t"); err != nil {
-		fmt.Printf("JSON parse error: %v", err)
-		return
+	fmt.Printf("Headers: %+v\n", r.Header)
+
+	if len(bodyBytes) > 0 {
+		var prettyJSON bytes.Buffer
+		if err = json.Indent(&prettyJSON, bodyBytes, "", "\t"); err != nil {
+			fmt.Printf("JSON parse error: %v", err)
+			return
+		}
+		fmt.Println(string(prettyJSON.Bytes()))
+	} else {
+		fmt.Printf("Body: No Body Supplied\n")
 	}
 
-	fmt.Println(string(prettyJSON.Bytes()))
+	// CORS headers
+	//w.Header().Set("Access-Control-Allow-Origin", "http://localhost:8000")
+	//w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+	//w.Header().Set("Access-Control-Allow-Credentials", "true")
+	//w.Header().Set("Access-Control-Allow-Headers", "Accept-Encoding,Authorization,X-Forwarded-For,Content-Type,Origin,Server")
 }
 
 func main() {
