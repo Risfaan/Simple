@@ -43,6 +43,8 @@ func (rl requestLogger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
 	//w.Header().Set("Access-Control-Allow-Credentials", "true")
 	//w.Header().Set("Access-Control-Allow-Headers", "Accept-Encoding,Authorization,X-Forwarded-For,Content-Type,Origin,Server")
+	
+	fmt.Println(string(prettyJSON.Bytes()))
 }
 
 func main() {
